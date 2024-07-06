@@ -1,6 +1,6 @@
 using TopUpPhone.Application.Services;
 using TopUpPhone.Application.Services.Interfaces;
-using TopUpPhone.Core.Domain.Interfaces;
+using TopUpPhone.Core.Interfaces;
 using TopUpPhone.Infra.Repository;
 
 var builder = WebApplication.CreateBuilder(args);

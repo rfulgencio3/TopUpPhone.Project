@@ -1,6 +1,7 @@
 ﻿using TopUpPhone.Application.Services.Interfaces;
-using TopUpPhone.Core.Domain.DTOs;
-using TopUpPhone.Core.Domain.Interfaces;
+using TopUpPhone.Core.Domain.DTOs.Beneficiary;
+using TopUpPhone.Core.Domain.DTOs.User;
+using TopUpPhone.Core.Interfaces;
 
 namespace TopUpPhone.Application.Services;
 
@@ -12,12 +13,22 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public Task<IAsyncResult> CreateUserAsync(CreateUserDTO createUserDTO)
+    public Task<IAsyncResult> CreateUserAsync(RequestUserDTO createUserDTO)
     {
         throw new NotImplementedException();
     }
 
     public Task<UserDTO> GetCustomerByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<UserDTO> GetCustomerByIdAsync(int id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<IAsyncResult> UpdateUserAsync(RequestUserDTO requestUserDTO)
     {
         throw new NotImplementedException();
     }

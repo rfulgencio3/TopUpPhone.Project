@@ -1,4 +1,4 @@
-﻿using TopUpPhone.Core.Domain.Interfaces;
+﻿using TopUpPhone.Core.Interfaces;
 
 namespace TopUpPhone.Infra.Repository;
 

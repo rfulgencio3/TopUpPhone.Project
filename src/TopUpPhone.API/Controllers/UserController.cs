@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TopUpPhone.Application.Services.Interfaces;
-using TopUpPhone.Core.Domain.DTOs;
+using TopUpPhone.Core.Domain.DTOs.Beneficiary;
 
 namespace TopUpPhone.API.Controllers;
 
@@ -16,7 +16,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetUserById([FromHeader] Guid id)
+    public async Task<IActionResult> GetUserById([FromHeader] int id)
     {
         var user = await _userService.GetCustomerByIdAsync(id);
         if (user == null) return NotFound();
@@ -25,7 +25,7 @@ public class UserController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> CreateUser([FromBody] CreateUserDTO createUserDTO)
+    public async Task<IActionResult> CreateUser([FromBody] RequestUserDTO createUserDTO)
     {
         await _userService.CreateUserAsync(createUserDTO);
         return NoContent();
