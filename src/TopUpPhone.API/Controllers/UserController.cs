@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TopUpPhone.Application.Services.Interfaces;
-using TopUpPhone.Core.Domain.DTOs.Beneficiary;
+using TopUpPhone.Core.Domain.DTOs.User;
 
 namespace TopUpPhone.API.Controllers;
 
@@ -18,7 +18,7 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetUserById([FromHeader] int id)
     {
-        var user = await _userService.GetCustomerByIdAsync(id);
+        var user = await _userService.GetUserByIdAsync(id);
         if (user == null) return NotFound();
 
         return Ok(user);
