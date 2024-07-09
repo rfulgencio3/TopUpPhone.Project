@@ -40,6 +40,7 @@ public class BeneficiaryRepository : IBeneficiaryRepository
 
     public async Task<int> CountByUserIdAsync(int userId)
     {
-        return await _context.Beneficiaries.CountAsync(b => b.UserId == userId);
+        return await _context.Beneficiaries.CountAsync(b => b.UserId == userId 
+            && b.Status == Core.Domain.Enums.Status.Active);
     }
 }

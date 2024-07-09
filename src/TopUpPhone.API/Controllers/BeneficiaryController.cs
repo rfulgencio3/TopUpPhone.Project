@@ -49,7 +49,15 @@ public class BeneficiaryController : ControllerBase
         var result = await _beneficiaryService.CreateBeneficiaryAsync(requestBeneficiaryDTO);
         if (!result.Success) return BadRequest(result.ErrorMessage);
 
-        return NoContent();
+        _linkFactory.AddLinks(result.Data);
+
+        var response = new
+        {
+            Message = $"USER_CREATED_WITH_SUCCESS: {result.Data.Id}",
+            result.Data
+        };
+
+        return CreatedAtAction(nameof(GetBeneficiaryById), new { id = result.Data.Id }, response);
     }
 
     [HttpPut("update")]

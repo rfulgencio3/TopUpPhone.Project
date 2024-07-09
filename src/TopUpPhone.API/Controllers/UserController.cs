@@ -40,7 +40,7 @@ public class UserController : ControllerBase
         var response = new
         {
             Message = $"USER_CREATED_WITH_SUCCESS: {result.Data.Id}",
-            Data = result.Data
+            result.Data
         };
 
         return CreatedAtAction(nameof(GetUserById), new { id = result.Data.Id }, response);

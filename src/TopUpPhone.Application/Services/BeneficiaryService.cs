@@ -2,7 +2,6 @@
 using TopUpPhone.Application.DTOs;
 using TopUpPhone.Application.Extensions;
 using TopUpPhone.Application.Services.Interfaces;
-using TopUpPhone.Core.Domain.Entities;
 using TopUpPhone.Core.Interfaces;
 
 namespace TopUpPhone.Application.Services;
@@ -46,8 +45,13 @@ public class BeneficiaryService : IBeneficiaryService
         if (user == null)
             return OperationResult<BeneficiaryDTO>.Failure("USER_NOT_FOUND");
 
+        var beneficiaryByUserCount = await _beneficiaryRepository.CountByUserIdAsync(user.Id);
+        if (beneficiaryByUserCount >= 5)
+            return OperationResult<BeneficiaryDTO>.Failure("USER_ALREAD_WITH_MAXIMUN_OF_ACTIVE_BENEFICIARIES");
+
         var beneficiary = createBeneficiaryDTO.ToEntity(user.Id);
         await _beneficiaryRepository.AddAsync(beneficiary);
+
         return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
     }
 
@@ -61,18 +65,7 @@ public class BeneficiaryService : IBeneficiaryService
         if (user == null)
             return OperationResult<BeneficiaryDTO>.Failure("USER_NOT_FOUND");
 
-        CreateBeneficiaryObject(updateBeneficiaryDTO, beneficiary);
-
         await _beneficiaryRepository.UpdateAsync(beneficiary);
         return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
-    }
-
-    private static void CreateBeneficiaryObject(RequestBeneficiaryDTO updateBeneficiaryDTO, BeneficiaryEntity beneficiary)
-    {
-        beneficiary.Nickname = updateBeneficiaryDTO.Nickname;
-        beneficiary.Status = updateBeneficiaryDTO.Status;
-        beneficiary.PhoneNumber = updateBeneficiaryDTO.PhoneNumber;
-        beneficiary.UserId = updateBeneficiaryDTO.UserId;
-        beneficiary.UpdatedAt = DateTime.UtcNow;
     }
 }
