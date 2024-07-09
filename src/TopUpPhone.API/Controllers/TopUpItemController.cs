@@ -36,12 +36,13 @@ public class TopUpItemController : ControllerBase
         var result = await _topUpItemService.GetAllTopUpItemsAsync();
         if (!result.Success) return BadRequest(result.ErrorMessage);
 
-        foreach (var topUpItem in result.Data)
+        var topUpItens = result.Data.Select(b =>
         {
-            _linkFactory.AddLinks(topUpItem);
-        }
+            _linkFactory.AddLinks(b);
+            return b;
+        }).ToList();
 
-        return Ok(result.Data);
+        return Ok(topUpItens);
     }
 
     [HttpPost("create")]

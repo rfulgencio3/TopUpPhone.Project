@@ -43,8 +43,8 @@ public class TransactionService : ITransactionService
         transaction.Amount = topUpItem.Amount;
         transaction.TransactionFee = topUpItem.TransactionFee;
 
-        user.Balance -= transaction.Amount + transaction.TransactionFee;
-        beneficiary.TopUpBalance += transaction.Amount;
+        user.Balance -= transaction.Amount;
+        beneficiary.TopUpBalance += (transaction.Amount - transaction.TransactionFee);
 
         try
         {

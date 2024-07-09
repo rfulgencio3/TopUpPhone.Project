@@ -35,12 +35,13 @@ public class BeneficiaryController : ControllerBase
         var result = await _beneficiaryService.GetAllBeneficiariesByUserAsync(id);
         if (!result.Success) return NotFound(result.ErrorMessage);
 
-        foreach (var beneficiary in result.Data)
+        var beneficiaries = result.Data.Select(b =>
         {
-            _linkFactory.AddLinks(beneficiary);
-        }
+            _linkFactory.AddLinks(b);
+            return b;
+        }).ToList();
 
-        return Ok(result.Data);
+        return Ok(beneficiaries);
     }
 
     [HttpPost("create")]
