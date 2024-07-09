@@ -1,9 +1,10 @@
-﻿using TopUpPhone.Core.Domain.DTOs;
+﻿using TopUpPhone.Application.Common;
+using TopUpPhone.Application.DTOs;
 
 namespace TopUpPhone.Application.Services.Interfaces;
-
 public interface IUserService
 {
-    Task<UserDTO> GetCustomerByIdAsync(Guid id);
-    Task<IAsyncResult> CreateUserAsync(CreateUserDTO createUserDTO);
+    Task<OperationResult<UserDTO>> GetUserByIdAsync(int id);
+    Task<OperationResult<bool>> CreateUserAsync(RequestUserDTO createUserDTO);
+    Task<OperationResult<bool>> UpdateIsVerifiedAsync(int id, bool isVerified);
 }
