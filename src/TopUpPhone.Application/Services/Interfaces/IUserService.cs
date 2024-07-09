@@ -1,5 +1,5 @@
 ﻿using TopUpPhone.Application.Common;
-using TopUpPhone.Core.Domain.DTOs.User;
+using TopUpPhone.Application.DTOs;
 
 namespace TopUpPhone.Application.Services.Interfaces;
 public interface IUserService

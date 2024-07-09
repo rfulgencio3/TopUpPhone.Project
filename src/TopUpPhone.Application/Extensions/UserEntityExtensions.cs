@@ -1,8 +1,8 @@
-﻿using TopUpPhone.Core.Domain.DTOs.User;
+﻿using TopUpPhone.Application.DTOs;
 using TopUpPhone.Core.Domain.Entities;
 using TopUpPhone.Core.Domain.Enums;
 
-namespace TopUpPhone.Core.Domain.Extensions;
+namespace TopUpPhone.Application.Extensions;
 
 public static class UserEntityExtensions
 {

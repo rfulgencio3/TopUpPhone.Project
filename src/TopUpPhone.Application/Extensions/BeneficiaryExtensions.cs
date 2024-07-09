@@ -1,7 +1,7 @@
-﻿using TopUpPhone.Core.Domain.DTOs.Beneficiary;
+﻿using TopUpPhone.Application.DTOs;
 using TopUpPhone.Core.Domain.Entities;
 
-namespace TopUpPhone.Core.Domain.Extensions;
+namespace TopUpPhone.Application.Extensions;
 
 public static class BeneficiaryEntityExtensions
 {

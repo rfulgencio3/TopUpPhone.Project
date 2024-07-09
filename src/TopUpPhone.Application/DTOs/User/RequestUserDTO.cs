@@ -1,6 +1,6 @@
 ﻿using TopUpPhone.Core.Domain.Enums;
 
-namespace TopUpPhone.Core.Domain.DTOs.User;
+namespace TopUpPhone.Application.DTOs;
 
 public class RequestUserDTO
 {

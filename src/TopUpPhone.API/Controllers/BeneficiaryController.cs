@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TopUpPhone.API.Utils;
+using TopUpPhone.Application.DTOs;
 using TopUpPhone.Application.Services.Interfaces;
-using TopUpPhone.Core.Domain.DTOs.Beneficiary;
 
 namespace TopUpPhone.API.Controllers;
 
@@ -9,26 +10,35 @@ namespace TopUpPhone.API.Controllers;
 public class BeneficiaryController : ControllerBase
 {
     private readonly IBeneficiaryService _beneficiaryService;
+    private readonly LinkFactory _linkFactory;
 
-    public BeneficiaryController(IBeneficiaryService beneficiaryService)
+    public BeneficiaryController(IBeneficiaryService beneficiaryService, LinkFactory linkFactory)
     {
         _beneficiaryService = beneficiaryService;
+        _linkFactory = linkFactory;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetBeneficiaryById([FromHeader] int id)
+    [HttpGet("{id}", Name = "GetBeneficiaryById")]
+    public async Task<IActionResult> GetBeneficiaryById([FromRoute] int id)
     {
         var result = await _beneficiaryService.GetBeneficiaryByIdAsync(id);
         if (!result.Success) return NotFound(result.ErrorMessage);
 
+        _linkFactory.AddLinks(result.Data);
+
         return Ok(result.Data);
     }
 
-    [HttpGet("user")]
-    public async Task<IActionResult> GetBeneficiaryByUserId([FromHeader] int id)
+    [HttpGet("user/{id}", Name = "GetBeneficiaryByUserId")]
+    public async Task<IActionResult> GetBeneficiaryByUserId([FromRoute] int id)
     {
         var result = await _beneficiaryService.GetAllBeneficiariesByUserAsync(id);
         if (!result.Success) return NotFound(result.ErrorMessage);
+
+        foreach (var beneficiary in result.Data)
+        {
+            _linkFactory.AddLinks(beneficiary);
+        }
 
         return Ok(result.Data);
     }
@@ -42,7 +52,7 @@ public class BeneficiaryController : ControllerBase
         return NoContent();
     }
 
-    [HttpPatch("update")]
+    [HttpPut("update")]
     public async Task<IActionResult> UpdateBeneficiary(
         [FromHeader] int id,
         [FromBody] RequestBeneficiaryDTO requestBeneficiaryDTO)

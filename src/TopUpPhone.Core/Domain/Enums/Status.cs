@@ -7,6 +7,6 @@ namespace TopUpPhone.Core.Domain.Enums
         [EnumMember(Value = "Active")]
         Active = 1,
         [EnumMember(Value = "Inactive")]
-        Inactive = 0
+        Inactive = 2
     }
 }

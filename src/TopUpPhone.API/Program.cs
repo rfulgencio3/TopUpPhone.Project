@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using TopUpPhone.Application.Services;
+using System.Text.Json;
+using TopUpPhone.API.Utils;
 using TopUpPhone.Application.Services.Interfaces;
+using TopUpPhone.Application.Services;
 using TopUpPhone.Core.Interfaces;
 using TopUpPhone.Infra.Repositories;
 using TopUpPhone.Infrastructure;
@@ -12,11 +14,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers()
 .AddJsonOptions(options =>
- {
-     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
- });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
+});
 
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -36,6 +38,13 @@ builder.Services.AddScoped<ITopUpItemService, TopUpItemService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
 builder.Services.AddScoped<ITopUpItemRepository, TopUpItemRepository>();
+
+// Register IHttpContextAccessor
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
+
+// Factories
+builder.Services.AddSingleton<LinkFactory>();
 
 var app = builder.Build();
 

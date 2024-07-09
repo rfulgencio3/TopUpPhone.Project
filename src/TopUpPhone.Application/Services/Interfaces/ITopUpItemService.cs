@@ -1,5 +1,5 @@
 ﻿using TopUpPhone.Application.Common;
-using TopUpPhone.Core.Domain.DTOs.TopUpItem;
+using TopUpPhone.Application.DTOs;
 using TopUpPhone.Core.Domain.Enums;
 
 namespace TopUpPhone.Application.Services.Interfaces;
