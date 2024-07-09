@@ -13,7 +13,8 @@ public static class TransactionExtensions
             BeneficiaryId = entity.BeneficiaryId,
             TopUpItemId = entity.TopUpItemId,
             Amount = entity.Amount,
-            TransactionFee = entity.TransactionFee
+            TransactionFee = entity.TransactionFee,
+            BeneficiaryBalance = 0
         };
     }
 
