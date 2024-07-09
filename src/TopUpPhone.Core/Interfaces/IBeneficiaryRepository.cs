@@ -8,5 +8,5 @@ public interface IBeneficiaryRepository
     Task<BeneficiaryEntity> GetByIdAsync(int id);
     Task AddAsync(BeneficiaryEntity beneficiary);
     Task UpdateAsync(BeneficiaryEntity beneficiary);
-    Task DeleteAsync(BeneficiaryEntity beneficiary);
+    Task<int> CountByUserIdAsync(int userId);
 }

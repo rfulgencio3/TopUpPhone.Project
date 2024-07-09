@@ -14,7 +14,6 @@ public class UserService : IUserService
     {
         _userRepository = userRepository;
     }
-
     public async Task<OperationResult<UserDTO>> GetUserByIdAsync(int id)
     {
         var user = await _userRepository.GetByIdAsync(id);
@@ -24,11 +23,12 @@ public class UserService : IUserService
         return OperationResult<UserDTO>.SuccessResult(user.ToDomain());
     }
 
-    public async Task<OperationResult<bool>> CreateUserAsync(RequestUserDTO createUserDTO)
+    public async Task<OperationResult<UserDTO>> CreateUserAsync(RequestUserDTO createUserDTO)
     {
         var user = createUserDTO.ToEntity();
         await _userRepository.AddAsync(user);
-        return OperationResult<bool>.SuccessResult(true);
+
+        return OperationResult<UserDTO>.SuccessResult(user.ToDomain());
     }
 
     public async Task<OperationResult<bool>> UpdateIsVerifiedAsync(int id, bool isVerified)
@@ -38,6 +38,22 @@ public class UserService : IUserService
             return OperationResult<bool>.Failure("USER_NOT_FOUND");
 
         user.IsVerified = isVerified;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _userRepository.UpdateAsync(user);
+        return OperationResult<bool>.SuccessResult(true);
+    }
+
+    public async Task<OperationResult<bool>> IncrementBalanceAsync(int id, decimal amount)
+    {
+        if (amount <= 0)
+            return OperationResult<bool>.Failure("AMOUNT_MUST_BE_POSITIVE");
+
+        var user = await _userRepository.GetByIdAsync(id);
+        if (user == null)
+            return OperationResult<bool>.Failure("USER_NOT_FOUND");
+
+        user.Balance += amount;
         user.UpdatedAt = DateTime.UtcNow;
 
         await _userRepository.UpdateAsync(user);

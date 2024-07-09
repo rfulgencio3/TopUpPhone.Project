@@ -67,16 +67,6 @@ public class BeneficiaryService : IBeneficiaryService
         return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
     }
 
-    public async Task<OperationResult<bool>> DeleteBeneficiaryAsync(int id)
-    {
-        var beneficiary = await _beneficiaryRepository.GetByIdAsync(id);
-        if (beneficiary == null)
-            return OperationResult<bool>.Failure("BENEFICIARY_NOT_FOUND");
-
-        await _beneficiaryRepository.DeleteAsync(beneficiary);
-        return OperationResult<bool>.SuccessResult(true);
-    }
-
     private static void CreateBeneficiaryObject(RequestBeneficiaryDTO updateBeneficiaryDTO, BeneficiaryEntity beneficiary)
     {
         beneficiary.Nickname = updateBeneficiaryDTO.Nickname;

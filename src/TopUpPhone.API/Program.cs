@@ -5,6 +5,7 @@ using System.Text.Json;
 using TopUpPhone.API.Utils;
 using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Application.Services;
+using TopUpPhone.Application.Validators;
 using TopUpPhone.Core.Interfaces;
 using TopUpPhone.Infra.Repositories;
 using TopUpPhone.Infrastructure;
@@ -23,9 +24,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // DbContext
-//builder.Services.AddDbContext<TopUpPhoneDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("TopUpPhoneDb")));
-
 builder.Services.AddDbContext<TopUpPhoneDbContext>(opt =>
     opt.UseInMemoryDatabase("TopUpPhoneDb"));
 
@@ -33,18 +31,23 @@ builder.Services.AddDbContext<TopUpPhoneDbContext>(opt =>
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IBeneficiaryService, BeneficiaryService>();
 builder.Services.AddScoped<ITopUpItemService, TopUpItemService>();
+builder.Services.AddScoped<ITransactionService, TransactionService>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
 builder.Services.AddScoped<ITopUpItemRepository, TopUpItemRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+
+// Validators
+builder.Services.AddScoped<TransactionValidator>();
+
+// Factories
+builder.Services.AddSingleton<LinkFactory>();
 
 // Register IHttpContextAccessor
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
-
-// Factories
-builder.Services.AddSingleton<LinkFactory>();
 
 var app = builder.Build();
 

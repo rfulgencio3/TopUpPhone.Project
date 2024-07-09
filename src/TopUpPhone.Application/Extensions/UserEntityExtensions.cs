@@ -24,7 +24,7 @@ public static class UserEntityExtensions
         {
             UserName = dto.Name,
             Balance = dto.Balance,
-            IsVerified = dto.IsVerified,
+            IsVerified = false,
             Status = Status.Active,
             CreatedAt = DateTime.UtcNow
         };

@@ -38,9 +38,8 @@ public class BeneficiaryRepository : IBeneficiaryRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(BeneficiaryEntity beneficiary)
+    public async Task<int> CountByUserIdAsync(int userId)
     {
-        _context.Beneficiaries.Remove(beneficiary);
-        await _context.SaveChangesAsync();
+        return await _context.Beneficiaries.CountAsync(b => b.UserId == userId);
     }
 }

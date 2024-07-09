@@ -35,7 +35,15 @@ public class UserController : ControllerBase
         var result = await _userService.CreateUserAsync(createUserDTO);
         if (!result.Success) return BadRequest(result.ErrorMessage);
 
-        return NoContent();
+        _linkFactory.AddLinks(result.Data);
+
+        var response = new
+        {
+            Message = $"USER_CREATED_WITH_SUCCESS: {result.Data.Id}",
+            Data = result.Data
+        };
+
+        return CreatedAtAction(nameof(GetUserById), new { id = result.Data.Id }, response);
     }
 
     [HttpPatch("verify-user")]
@@ -43,6 +51,15 @@ public class UserController : ControllerBase
     {
         var result = await _userService.UpdateIsVerifiedAsync(id, isVerified);
         if (!result.Success) return NotFound(result.ErrorMessage);
+
+        return NoContent();
+    }
+
+    [HttpPatch("increment-balance")]
+    public async Task<IActionResult> IncrementBalance([FromHeader] int id, [FromBody] decimal amount)
+    {
+        var result = await _userService.IncrementBalanceAsync(id, amount);
+        if (!result.Success) return BadRequest(result.ErrorMessage);
 
         return NoContent();
     }

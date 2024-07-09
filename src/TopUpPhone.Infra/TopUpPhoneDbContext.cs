@@ -39,11 +39,6 @@ namespace TopUpPhone.Infrastructure
                 .HasConversion<int>();
 
             modelBuilder.Entity<TransactionEntity>()
-                .HasOne(t => t.User)
-                .WithMany()
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<TransactionEntity>()
                 .HasOne(t => t.Beneficiary)
                 .WithMany()
                 .OnDelete(DeleteBehavior.Restrict);
