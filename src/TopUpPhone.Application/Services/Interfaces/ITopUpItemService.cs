@@ -1,12 +1,13 @@
-﻿using TopUpPhone.Core.Domain.DTOs.TopUpItem;
+﻿using TopUpPhone.Application.Common;
+using TopUpPhone.Core.Domain.DTOs.TopUpItem;
+using TopUpPhone.Core.Domain.Enums;
 
 namespace TopUpPhone.Application.Services.Interfaces;
 
 public interface ITopUpItemService
 {
-    Task<TopUpItemDTO> GetTopUpItemByIdAsync(int id);
-    Task<IEnumerable<TopUpItemDTO>> GetAllTopUpItemsAsync();
-    Task CreateTopUpItemAsync(RequestTopUpItemDTO requestTopUpItemDTO);
-    Task UpdateTopUpItemAsync(int id, RequestTopUpItemDTO requestTopUpItemDTO);
-    Task DeleteTopUpItemAsync(int id);
+    Task<OperationResult<TopUpItemDTO>> GetTopUpItemByIdAsync(int id);
+    Task<OperationResult<IEnumerable<TopUpItemDTO>>> GetAllTopUpItemsAsync();
+    Task<OperationResult<bool>> CreateTopUpItemAsync(RequestTopUpItemDTO requestTopUpItemDTO);
+    Task<OperationResult<bool>> UpdateTopUpItemStatusAsync(int id, Status status);
 }

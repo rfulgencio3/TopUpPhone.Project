@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Core.Domain.DTOs.TopUpItem;
+using TopUpPhone.Core.Domain.Enums;
 
 namespace TopUpPhone.API.Controllers;
 
@@ -15,28 +16,41 @@ public class TopUpItemController : ControllerBase
         _topUpItemService = topUpItemService;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetTopUpItemById([FromHeader] int id)
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetTopUpItemById([FromRoute] int id)
     {
-        var topUpItem = await _topUpItemService.GetTopUpItemByIdAsync(id);
-        if (topUpItem == null) return NotFound();
+        var result = await _topUpItemService.GetTopUpItemByIdAsync(id);
+        if (!result.Success) return NotFound(result.ErrorMessage);
 
-        return Ok(topUpItem);
+        return Ok(result.Data);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllTopUpItems()
+    {
+        var result = await _topUpItemService.GetAllTopUpItemsAsync();
+        if (!result.Success) return BadRequest(result.ErrorMessage);
+
+        return Ok(result.Data);
     }
 
     [HttpPost("create")]
     public async Task<IActionResult> CreateTopUpItem([FromBody] RequestTopUpItemDTO requestTopUpItemDTO)
     {
-        await _topUpItemService.CreateTopUpItemAsync(requestTopUpItemDTO);
+        var result = await _topUpItemService.CreateTopUpItemAsync(requestTopUpItemDTO);
+        if (!result.Success) return BadRequest(result.ErrorMessage);
+
         return NoContent();
     }
 
-    [HttpPatch("update")]
-    public async Task<IActionResult> UpdateTopUpItem(
+    [HttpPatch("update-status")]
+    public async Task<IActionResult> UpdateTopUpItemStatus(
         [FromHeader] int id,
-        [FromBody] RequestTopUpItemDTO requestTopUpItemDTO)
+        [FromBody] Status status)
     {
-        await _topUpItemService.UpdateTopUpItemAsync(id, requestTopUpItemDTO);
+        var result = await _topUpItemService.UpdateTopUpItemStatusAsync(id, status);
+        if (!result.Success) return NotFound(result.ErrorMessage);
+
         return NoContent();
     }
 }
