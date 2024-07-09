@@ -30,4 +30,13 @@ public class UserController : ControllerBase
         await _userService.CreateUserAsync(createUserDTO);
         return NoContent();
     }
+
+    [HttpPatch("verify")]
+    public async Task<IActionResult> UpdateIsVerified([FromHeader] int id, [FromBody] bool isVerified)
+    {
+        var result = await _userService.UpdateIsVerifiedAsync(id, isVerified);
+        if (!result) return NotFound();
+
+        return NoContent();
+    }
 }

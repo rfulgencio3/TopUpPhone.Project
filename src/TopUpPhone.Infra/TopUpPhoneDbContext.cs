@@ -25,11 +25,13 @@ public class TopUpPhoneDbContext : DbContext
         modelBuilder.Entity<UserEntity>()
             .HasMany(u => u.Beneficiaries)
             .WithOne(b => b.User)
+            .HasForeignKey(b => b.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<BeneficiaryEntity>()
             .HasOne(b => b.User)
             .WithMany(u => u.Beneficiaries)
+            .HasForeignKey(b => b.UserId)
             .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<TransactionEntity>()

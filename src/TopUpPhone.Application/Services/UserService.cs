@@ -27,4 +27,16 @@ public class UserService : IUserService
         var user = createUserDTO.ToEntity();
         await _userRepository.AddAsync(user);
     }
+
+    public async Task<bool> UpdateIsVerifiedAsync(int id, bool isVerified)
+    {
+        var user = await _userRepository.GetByIdAsync(id);
+        if (user == null) return false;
+
+        user.IsVerified = isVerified;
+        user.UpdatedAt = DateTime.UtcNow;
+
+        await _userRepository.UpdateAsync(user);
+        return true;
+    }
 }
