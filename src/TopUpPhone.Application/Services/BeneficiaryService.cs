@@ -1,4 +1,5 @@
-﻿using TopUpPhone.Application.Services.Interfaces;
+﻿using TopUpPhone.Application.Common;
+using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Core.Domain.DTOs.Beneficiary;
 using TopUpPhone.Core.Domain.Entities;
 using TopUpPhone.Core.Domain.Extensions;
@@ -17,50 +18,65 @@ public class BeneficiaryService : IBeneficiaryService
         _userRepository = userRepository;
     }
 
-    public async Task<BeneficiaryDTO> GetBeneficiaryByIdAsync(int id)
+    public async Task<OperationResult<BeneficiaryDTO>> GetBeneficiaryByIdAsync(int id)
     {
         var beneficiary = await _beneficiaryRepository.GetByIdAsync(id);
-        if (beneficiary == null) return null;
+        if (beneficiary == null)
+            return OperationResult<BeneficiaryDTO>.Failure("BENEFICIARY_NOT_FOUND");
 
-        return beneficiary.ToDomain();
+        return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
     }
 
-    public async Task<IEnumerable<BeneficiaryDTO>> GetAllBeneficiariesByUserAsync(int userId)
+    public async Task<OperationResult<IEnumerable<BeneficiaryDTO>>> GetAllBeneficiariesByUserAsync(int userId)
     {
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user == null)
+            return OperationResult<IEnumerable<BeneficiaryDTO>>.Failure("USER_NOT_FOUND");
+
         var beneficiaries = await _beneficiaryRepository.GetAllByUserIdAsync(userId);
-        return beneficiaries.Select(b => b.ToDomain());
+        if (!beneficiaries.Any())
+            return OperationResult<IEnumerable<BeneficiaryDTO>>.Failure("NO_BENEFICIARIES_FOUND");
+
+        return OperationResult<IEnumerable<BeneficiaryDTO>>.SuccessResult(beneficiaries.Select(b => b.ToDomain()));
     }
 
-    public async Task CreateBeneficiaryAsync(RequestBeneficiaryDTO createBeneficiaryDTO)
+    public async Task<OperationResult<BeneficiaryDTO>> CreateBeneficiaryAsync(RequestBeneficiaryDTO createBeneficiaryDTO)
     {
         var user = await _userRepository.GetByIdAsync(createBeneficiaryDTO.UserId);
-        if (user == null) throw new Exception("User not found");
+        if (user == null)
+            return OperationResult<BeneficiaryDTO>.Failure("USER_NOT_FOUND");
 
         var beneficiary = createBeneficiaryDTO.ToEntity(user.Id);
         await _beneficiaryRepository.AddAsync(beneficiary);
+        return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
     }
 
-    public async Task UpdateBeneficiaryAsync(int id, RequestBeneficiaryDTO updateBeneficiaryDTO)
+    public async Task<OperationResult<BeneficiaryDTO>> UpdateBeneficiaryAsync(int id, RequestBeneficiaryDTO updateBeneficiaryDTO)
     {
         var beneficiary = await _beneficiaryRepository.GetByIdAsync(id);
-        if (beneficiary == null) throw new Exception("Beneficiary not found");
+        if (beneficiary == null)
+            return OperationResult<BeneficiaryDTO>.Failure("BENEFICIARY_NOT_FOUND");
 
         var user = await _userRepository.GetByIdAsync(updateBeneficiaryDTO.UserId);
-        if (user == null) throw new Exception("User not found");
+        if (user == null)
+            return OperationResult<BeneficiaryDTO>.Failure("USER_NOT_FOUND");
 
         CreateBeneficiaryObject(updateBeneficiaryDTO, beneficiary);
 
         await _beneficiaryRepository.UpdateAsync(beneficiary);
+        return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
     }
 
-    public async Task DeleteBeneficiaryAsync(int id)
+    public async Task<OperationResult<bool>> DeleteBeneficiaryAsync(int id)
     {
         var beneficiary = await _beneficiaryRepository.GetByIdAsync(id);
-        if (beneficiary == null) throw new Exception("Beneficiary not found");
+        if (beneficiary == null)
+            return OperationResult<bool>.Failure("BENEFICIARY_NOT_FOUND");
 
         await _beneficiaryRepository.DeleteAsync(beneficiary);
+        return OperationResult<bool>.SuccessResult(true);
     }
-    
+
     private static void CreateBeneficiaryObject(RequestBeneficiaryDTO updateBeneficiaryDTO, BeneficiaryEntity beneficiary)
     {
         beneficiary.Nickname = updateBeneficiaryDTO.Nickname;

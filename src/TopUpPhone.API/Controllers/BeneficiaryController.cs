@@ -18,34 +18,47 @@ public class BeneficiaryController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetBeneficiaryById([FromHeader] int id)
     {
-        var beneficiary = await _beneficiaryService.GetBeneficiaryByIdAsync(id);
-        if (beneficiary == null) return NotFound();
+        var result = await _beneficiaryService.GetBeneficiaryByIdAsync(id);
+        if (!result.Success) return NotFound(result.ErrorMessage);
 
-        return Ok(beneficiary);
+        return Ok(result.Data);
     }
 
     [HttpGet("user")]
     public async Task<IActionResult> GetBeneficiaryByUserId([FromHeader] int id)
     {
-        var beneficiary = await _beneficiaryService.GetAllBeneficiariesByUserAsync(id);
-        if (beneficiary == null) return NotFound();
+        var result = await _beneficiaryService.GetAllBeneficiariesByUserAsync(id);
+        if (!result.Success) return NotFound(result.ErrorMessage);
 
-        return Ok(beneficiary);
+        return Ok(result.Data);
     }
 
     [HttpPost("create")]
-    public async Task<IActionResult> CreateTopUpItem([FromBody] RequestBeneficiaryDTO requestBeneficiaryDTO)
+    public async Task<IActionResult> CreateBeneficiary([FromBody] RequestBeneficiaryDTO requestBeneficiaryDTO)
     {
-        await _beneficiaryService.CreateBeneficiaryAsync(requestBeneficiaryDTO);
+        var result = await _beneficiaryService.CreateBeneficiaryAsync(requestBeneficiaryDTO);
+        if (!result.Success) return BadRequest(result.ErrorMessage);
+
         return NoContent();
     }
 
     [HttpPatch("update")]
-    public async Task<IActionResult> UpdateTopUpItem(
+    public async Task<IActionResult> UpdateBeneficiary(
         [FromHeader] int id,
         [FromBody] RequestBeneficiaryDTO requestBeneficiaryDTO)
     {
-        await _beneficiaryService.UpdateBeneficiaryAsync(id, requestBeneficiaryDTO);
+        var result = await _beneficiaryService.UpdateBeneficiaryAsync(id, requestBeneficiaryDTO);
+        if (!result.Success) return BadRequest(result.ErrorMessage);
+
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteBeneficiary(int id)
+    {
+        var result = await _beneficiaryService.DeleteBeneficiaryAsync(id);
+        if (!result.Success) return NotFound(result.ErrorMessage);
+
         return NoContent();
     }
 }
