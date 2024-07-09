@@ -1,7 +1,12 @@
-﻿namespace TopUpPhone.Core.Domain.Enums;
+﻿using System.Runtime.Serialization;
 
-public enum Status
+namespace TopUpPhone.Core.Domain.Enums
 {
-    Active = 1,
-    Disabled = 2
+    public enum Status
+    {
+        [EnumMember(Value = "Active")]
+        Active = 1,
+        [EnumMember(Value = "Inactive")]
+        Inactive = 0
+    }
 }
