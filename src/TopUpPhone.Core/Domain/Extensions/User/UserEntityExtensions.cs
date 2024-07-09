@@ -1,5 +1,4 @@
-﻿using TopUpPhone.Core.Domain.DTOs.Beneficiary;
-using TopUpPhone.Core.Domain.DTOs.User;
+﻿using TopUpPhone.Core.Domain.DTOs.User;
 using TopUpPhone.Core.Domain.Entities;
 using TopUpPhone.Core.Domain.Enums;
 

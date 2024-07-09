@@ -6,7 +6,7 @@ public interface ITopUpItemService
 {
     Task<TopUpItemDTO> GetTopUpItemByIdAsync(int id);
     Task<IEnumerable<TopUpItemDTO>> GetAllTopUpItemsAsync();
-    Task<IAsyncResult> CreateTopUpItemAsync(RequestTopUpItemDTO requestTopUpItemDTO);
-    Task<IAsyncResult> UpdateTopUpItemAsync(int id, RequestTopUpItemDTO requestTopUpItemDTO);
-    Task<IAsyncResult> DeleteTopUpItemAsync(int id);
+    Task CreateTopUpItemAsync(RequestTopUpItemDTO requestTopUpItemDTO);
+    Task UpdateTopUpItemAsync(int id, RequestTopUpItemDTO requestTopUpItemDTO);
+    Task DeleteTopUpItemAsync(int id);
 }

@@ -1,7 +1,6 @@
 ﻿using TopUpPhone.Core.Domain.Entities;
 
-namespace TopUpPhone.Core.Domain.Repositories;
-
+namespace TopUpPhone.Core.Interfaces;
 public interface IUserRepository
 {
     Task<UserEntity> GetByIdAsync(int id);

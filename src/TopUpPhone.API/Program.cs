@@ -1,7 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using TopUpPhone.Application.Services;
 using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Core.Interfaces;
-using TopUpPhone.Infra.Repository;
+using TopUpPhone.Infra.Repositories;
+using TopUpPhone.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +14,20 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// DbContext
+//builder.Services.AddDbContext<TopUpPhoneDbContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("TopUpPhoneDb")));
+
+builder.Services.AddDbContext<TopUpPhoneDbContext>(opt =>
+    opt.UseInMemoryDatabase("TopUpPhoneDb"));
+
 // Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ITopUpItemService, TopUpItemService>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITopUpItemRepository, TopUpItemRepository>();
 
 var app = builder.Build();
 

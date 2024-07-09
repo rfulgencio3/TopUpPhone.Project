@@ -1,7 +1,7 @@
 ﻿using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Core.Domain.DTOs.User;
 using TopUpPhone.Core.Domain.Extensions;
-using TopUpPhone.Core.Domain.Repositories;
+using TopUpPhone.Core.Interfaces;
 
 namespace TopUpPhone.Application.Services;
 
