@@ -18,16 +18,18 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetUserById([FromHeader] int id)
     {
-        var user = await _userService.GetUserByIdAsync(id);
-        if (user == null) return NotFound();
+        var result = await _userService.GetUserByIdAsync(id);
+        if (!result.Success) return NotFound(result.ErrorMessage);
 
-        return Ok(user);
+        return Ok(result.Data);
     }
 
     [HttpPost("create")]
     public async Task<IActionResult> CreateUser([FromBody] RequestUserDTO createUserDTO)
     {
-        await _userService.CreateUserAsync(createUserDTO);
+        var result = await _userService.CreateUserAsync(createUserDTO);
+        if (!result.Success) return BadRequest(result.ErrorMessage);
+
         return NoContent();
     }
 
@@ -35,7 +37,7 @@ public class UserController : ControllerBase
     public async Task<IActionResult> UpdateIsVerified([FromHeader] int id, [FromBody] bool isVerified)
     {
         var result = await _userService.UpdateIsVerifiedAsync(id, isVerified);
-        if (!result) return NotFound();
+        if (!result.Success) return NotFound(result.ErrorMessage);
 
         return NoContent();
     }

@@ -1,4 +1,5 @@
-﻿using TopUpPhone.Application.Services.Interfaces;
+﻿using TopUpPhone.Application.Common;
+using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Core.Domain.DTOs.User;
 using TopUpPhone.Core.Domain.Extensions;
 using TopUpPhone.Core.Interfaces;
@@ -14,29 +15,32 @@ public class UserService : IUserService
         _userRepository = userRepository;
     }
 
-    public async Task<UserDTO> GetUserByIdAsync(int id)
+    public async Task<OperationResult<UserDTO>> GetUserByIdAsync(int id)
     {
         var user = await _userRepository.GetByIdAsync(id);
-        if (user == null) return null;
+        if (user == null)
+            return OperationResult<UserDTO>.Failure("USER_NOT_FOUND");
 
-        return user.ToDomain();
+        return OperationResult<UserDTO>.SuccessResult(user.ToDomain());
     }
 
-    public async Task CreateUserAsync(RequestUserDTO createUserDTO)
+    public async Task<OperationResult<bool>> CreateUserAsync(RequestUserDTO createUserDTO)
     {
         var user = createUserDTO.ToEntity();
         await _userRepository.AddAsync(user);
+        return OperationResult<bool>.SuccessResult(true);
     }
 
-    public async Task<bool> UpdateIsVerifiedAsync(int id, bool isVerified)
+    public async Task<OperationResult<bool>> UpdateIsVerifiedAsync(int id, bool isVerified)
     {
         var user = await _userRepository.GetByIdAsync(id);
-        if (user == null) return false;
+        if (user == null)
+            return OperationResult<bool>.Failure("USER_NOT_FOUND");
 
         user.IsVerified = isVerified;
         user.UpdatedAt = DateTime.UtcNow;
 
         await _userRepository.UpdateAsync(user);
-        return true;
+        return OperationResult<bool>.SuccessResult(true);
     }
 }
