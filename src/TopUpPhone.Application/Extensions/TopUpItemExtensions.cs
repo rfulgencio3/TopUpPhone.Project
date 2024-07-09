@@ -5,26 +5,26 @@ namespace TopUpPhone.Application.Extensions;
 
 public static class TopUpItemEntityExtensions
 {
-    public static TopUpItemDTO ToDomain(this TopUpItemEntity topUpItemEntity)
+    public static TopUpItemDTO ToDomain(this TopUpItemEntity entity)
     {
         return new TopUpItemDTO
         {
-            Id = topUpItemEntity.Id,
-            Description = topUpItemEntity.Description,
-            Amount = topUpItemEntity.Amount,
-            TransactionFee = topUpItemEntity.TransactionFee,
-            Status = topUpItemEntity.Status
+            Id = entity.Id,
+            Description = entity.Description,
+            Amount = entity.Amount,
+            TransactionFee = entity.TransactionFee,
+            Status = entity.Status
         };
     }
 
-    public static TopUpItemEntity ToEntity(this RequestTopUpItemDTO requestTopUpItemDTO)
+    public static TopUpItemEntity ToEntity(this RequestTopUpItemDTO dto)
     {
         return new TopUpItemEntity
         {
-            Description = requestTopUpItemDTO.Description,
-            Amount = requestTopUpItemDTO.Amount,
-            TransactionFee = requestTopUpItemDTO.TransactionFee,
-            Status = requestTopUpItemDTO.Status,
+            Description = dto.Description,
+            Amount = dto.Amount,
+            TransactionFee = dto.TransactionFee,
+            Status = dto.Status,
             CreatedAt = DateTime.UtcNow
         };
     }

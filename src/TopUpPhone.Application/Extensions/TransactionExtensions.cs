@@ -5,19 +5,6 @@ namespace TopUpPhone.Application.Extensions;
 
 public static class TransactionExtensions
 {
-    public static TransactionEntity ToEntity(this RequestTransactionDTO dto)
-    {
-        return new TransactionEntity
-        {
-            BeneficiaryId = dto.BeneficiaryId,
-            TopUpItemId = dto.TopUpItemId,
-            Amount = 0,                 
-            TransactionFee = 0,
-            CreatedAt = DateTime.UtcNow,
-            UpdatedAt = DateTime.UtcNow
-        };
-    }
-
     public static TransactionDTO ToDomain(this TransactionEntity entity)
     {
         return new TransactionDTO
@@ -27,6 +14,19 @@ public static class TransactionExtensions
             TopUpItemId = entity.TopUpItemId,
             Amount = entity.Amount,
             TransactionFee = entity.TransactionFee
+        };
+    }
+
+    public static TransactionEntity ToEntity(this RequestTransactionDTO dto)
+    {
+        return new TransactionEntity
+        {
+            BeneficiaryId = dto.BeneficiaryId,
+            TopUpItemId = dto.TopUpItemId,
+            Amount = 0,
+            TransactionFee = 0,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
         };
     }
 }

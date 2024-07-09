@@ -55,13 +55,13 @@ public class BeneficiaryService : IBeneficiaryService
         return OperationResult<BeneficiaryDTO>.SuccessResult(beneficiary.ToDomain());
     }
 
-    public async Task<OperationResult<BeneficiaryDTO>> UpdateBeneficiaryAsync(int id, RequestBeneficiaryDTO updateBeneficiaryDTO)
+    public async Task<OperationResult<BeneficiaryDTO>> UpdateBeneficiaryAsync(int id, UpdateBeneficiaryDTO updateBeneficiaryDTO)
     {
         var beneficiary = await _beneficiaryRepository.GetByIdAsync(id);
         if (beneficiary == null)
             return OperationResult<BeneficiaryDTO>.Failure("BENEFICIARY_NOT_FOUND");
 
-        var user = await _userRepository.GetByIdAsync(updateBeneficiaryDTO.UserId);
+        var user = await _userRepository.GetByIdAsync(beneficiary.UserId);
         if (user == null)
             return OperationResult<BeneficiaryDTO>.Failure("USER_NOT_FOUND");
 

@@ -5,24 +5,26 @@ namespace TopUpPhone.Application.Extensions;
 
 public static class BeneficiaryEntityExtensions
 {
-    public static BeneficiaryDTO ToDomain(this BeneficiaryEntity beneficiaryEntity)
+    public static BeneficiaryDTO ToDomain(this BeneficiaryEntity entity)
     {
         return new BeneficiaryDTO
         {
-            Nickname = beneficiaryEntity.Nickname,
-            TopUpBalance = beneficiaryEntity.TopUpBalance,
-            Status = beneficiaryEntity.Status,
-            PhoneNumber = beneficiaryEntity.PhoneNumber
+            Id = entity.Id,
+            UserId = entity.UserId,
+            Nickname = entity.Nickname,
+            TopUpBalance = entity.TopUpBalance,
+            Status = entity.Status,
+            PhoneNumber = entity.PhoneNumber
         };
     }
 
-    public static BeneficiaryEntity ToEntity(this RequestBeneficiaryDTO requestBeneficiaryDTO, int userId)
+    public static BeneficiaryEntity ToEntity(this RequestBeneficiaryDTO dto, int userId)
     {
         return new BeneficiaryEntity
         {
-            Nickname = requestBeneficiaryDTO.Nickname,
-            Status = requestBeneficiaryDTO.Status,
-            PhoneNumber = requestBeneficiaryDTO.PhoneNumber,
+            Nickname = dto.Nickname,
+            Status = dto.Status,
+            PhoneNumber = dto.PhoneNumber,
             UserId = userId,
             CreatedAt = DateTime.UtcNow
         };

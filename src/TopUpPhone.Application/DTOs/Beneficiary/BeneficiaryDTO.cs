@@ -6,6 +6,7 @@ namespace TopUpPhone.Application.DTOs;
 public class BeneficiaryDTO
 {
     public int Id { get; set; }
+    public int UserId { get; set; }
     public string Nickname { get; set; }
     public decimal TopUpBalance { get; set; }
     public Status Status { get; set; }

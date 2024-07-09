@@ -8,5 +8,5 @@ public interface IBeneficiaryService
     Task<OperationResult<BeneficiaryDTO>> GetBeneficiaryByIdAsync(int id);
     Task<OperationResult<IEnumerable<BeneficiaryDTO>>> GetAllBeneficiariesByUserAsync(int userId);
     Task<OperationResult<BeneficiaryDTO>> CreateBeneficiaryAsync(RequestBeneficiaryDTO createBeneficiaryDTO);
-    Task<OperationResult<BeneficiaryDTO>> UpdateBeneficiaryAsync(int id, RequestBeneficiaryDTO updateBeneficiaryDTO);
+    Task<OperationResult<BeneficiaryDTO>> UpdateBeneficiaryAsync(int id, UpdateBeneficiaryDTO updateBeneficiaryDTO);
 }

@@ -63,9 +63,9 @@ public class BeneficiaryController : ControllerBase
     [HttpPut("update")]
     public async Task<IActionResult> UpdateBeneficiary(
         [FromHeader] int id,
-        [FromBody] RequestBeneficiaryDTO requestBeneficiaryDTO)
+        [FromBody] UpdateBeneficiaryDTO updateBeneficiaryDTO)
     {
-        var result = await _beneficiaryService.UpdateBeneficiaryAsync(id, requestBeneficiaryDTO);
+        var result = await _beneficiaryService.UpdateBeneficiaryAsync(id, updateBeneficiaryDTO);
         if (!result.Success) return BadRequest(result.ErrorMessage);
 
         return NoContent();
