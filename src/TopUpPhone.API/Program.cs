@@ -23,10 +23,12 @@ builder.Services.AddDbContext<TopUpPhoneDbContext>(opt =>
 
 // Services
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IBeneficiaryService, BeneficiaryService>();
 builder.Services.AddScoped<ITopUpItemService, TopUpItemService>();
 
 // Repositories
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IBeneficiaryRepository, BeneficiaryRepository>();
 builder.Services.AddScoped<ITopUpItemRepository, TopUpItemRepository>();
 
 var app = builder.Build();
