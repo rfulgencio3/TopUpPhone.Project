@@ -71,13 +71,4 @@ public class BeneficiaryController : ControllerBase
 
         return NoContent();
     }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteBeneficiary(int id)
-    {
-        var result = await _beneficiaryService.DeleteBeneficiaryAsync(id);
-        if (!result.Success) return NotFound(result.ErrorMessage);
-
-        return NoContent();
-    }
 }
