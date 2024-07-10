@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using TopUpPhone.Application.Common;
+﻿using TopUpPhone.Application.Common;
 using TopUpPhone.Core.Domain.Enums;
 
 namespace TopUpPhone.Application.DTOs;

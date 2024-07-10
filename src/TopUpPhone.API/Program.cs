@@ -45,6 +45,9 @@ builder.Services.AddScoped<TransactionValidator>();
 // Factories
 builder.Services.AddSingleton<LinkFactory>();
 
+// HttpClient
+builder.Services.AddHttpClient();
+
 // Register IHttpContextAccessor
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<IUrlHelperFactory, UrlHelperFactory>();
