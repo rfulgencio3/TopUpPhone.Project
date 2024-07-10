@@ -5,13 +5,13 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{79BED34A-3910-47B0-8549-914CC830BCC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopUpPhone.API", "src\TopUpPhone.API\TopUpPhone.API.csproj", "{8BDB2D6E-3DF5-4C87-A02E-D9161CC2720B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopUpPhone.API", "src\TopUpPhone.API\TopUpPhone.API.csproj", "{8BDB2D6E-3DF5-4C87-A02E-D9161CC2720B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopUpPhone.Core", "src\TopUpPhone.Core\TopUpPhone.Core.csproj", "{1766E447-50E0-4483-B700-45F71D162CEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopUpPhone.Core", "src\TopUpPhone.Core\TopUpPhone.Core.csproj", "{1766E447-50E0-4483-B700-45F71D162CEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopUpPhone.Application", "src\TopUpPhone.Application\TopUpPhone.Application.csproj", "{FD09458D-646C-4C7D-9A32-BDC0C2C5E8AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopUpPhone.Application", "src\TopUpPhone.Application\TopUpPhone.Application.csproj", "{FD09458D-646C-4C7D-9A32-BDC0C2C5E8AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TopUpPhone.Infra", "src\TopUpPhone.Infra\TopUpPhone.Infra.csproj", "{D01F46DA-5083-4D28-8C1E-6FB0F24C6214}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TopUpPhone.Infra", "src\TopUpPhone.Infra\TopUpPhone.Infra.csproj", "{D01F46DA-5083-4D28-8C1E-6FB0F24C6214}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

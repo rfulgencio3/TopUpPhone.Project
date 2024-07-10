@@ -1,11 +1,9 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Net.Http.Json;
 using TopUpPhone.Application.Common;
 using TopUpPhone.Application.DTOs;
 using TopUpPhone.Application.Extensions;
 using TopUpPhone.Application.Services.Interfaces;
 using TopUpPhone.Application.Validators;
-using TopUpPhone.Core.Domain.Entities;
 using TopUpPhone.Core.Interfaces;
 
 namespace TopUpPhone.Application.Services;
@@ -14,7 +12,6 @@ public class TransactionService : ITransactionService
 {
     private readonly IUserRepository _userRepository;
     private readonly IBeneficiaryRepository _beneficiaryRepository;
-    private readonly ITopUpItemRepository _topUpItemRepository;
     private readonly ITransactionRepository _transactionRepository;
     private readonly TransactionValidator _transactionValidator;
     private readonly HttpClient _httpClient;
@@ -22,17 +19,15 @@ public class TransactionService : ITransactionService
     public TransactionService(
         IUserRepository userRepository,
         IBeneficiaryRepository beneficiaryRepository,
-        ITopUpItemRepository topUpItemRepository,
         ITransactionRepository transactionRepository,
         TransactionValidator transactionValidator,
         HttpClient httpClient)
     {
         _userRepository = userRepository;
         _beneficiaryRepository = beneficiaryRepository;
-        _topUpItemRepository = topUpItemRepository;
         _transactionRepository = transactionRepository;
         _transactionValidator = transactionValidator;
-        _httpClient = httpClient;   
+        _httpClient = httpClient;
     }
 
     public async Task<OperationResult<TransactionDTO>> CreateTransactionAsync(RequestTransactionDTO requestTransactionDTO)
@@ -78,7 +73,7 @@ public class TransactionService : ITransactionService
         var response = await _httpClient.GetAsync($"api/beneficiary/{beneficiaryId}");
         response.EnsureSuccessStatusCode();
 
-        var beneficiary = await response.Content.ReadAsAsync<BeneficiaryDTO>();
+        var beneficiary = await response.Content.ReadFromJsonAsync<BeneficiaryDTO>();
         return beneficiary.TopUpBalance;
     }
 }
