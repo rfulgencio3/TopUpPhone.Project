@@ -1,4 +1,5 @@
 ﻿using TopUpPhone.Application.DTOs;
+using TopUpPhone.Application.Helpers;
 using TopUpPhone.Core.Domain.Entities;
 
 namespace TopUpPhone.Application.Extensions;
@@ -23,7 +24,7 @@ public static class BeneficiaryEntityExtensions
         return new BeneficiaryEntity
         {
             Nickname = dto.Nickname,
-            Status = dto.Status,
+            Status = EnumHelper.ConvertToStatus(dto.Status),
             PhoneNumber = dto.PhoneNumber,
             UserId = userId,
             CreatedAt = DateTime.UtcNow

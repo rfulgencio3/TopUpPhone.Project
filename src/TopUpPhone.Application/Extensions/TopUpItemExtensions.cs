@@ -1,4 +1,5 @@
 ﻿using TopUpPhone.Application.DTOs;
+using TopUpPhone.Application.Helpers;
 using TopUpPhone.Core.Domain.Entities;
 
 namespace TopUpPhone.Application.Extensions;
@@ -24,7 +25,7 @@ public static class TopUpItemEntityExtensions
             Description = dto.Description,
             Amount = dto.Amount,
             TransactionFee = dto.TransactionFee,
-            Status = dto.Status,
+            Status = EnumHelper.ConvertToStatus(dto.Status),
             CreatedAt = DateTime.UtcNow
         };
     }

@@ -2,6 +2,8 @@
 using TopUpPhone.Application.DTOs;
 using TopUpPhone.Application.Extensions;
 using TopUpPhone.Application.Services.Interfaces;
+using TopUpPhone.Core.Domain.Entities;
+using TopUpPhone.Core.Domain.Enums;
 using TopUpPhone.Core.Interfaces;
 
 namespace TopUpPhone.Application.Services;
@@ -14,6 +16,7 @@ public class UserService : IUserService
     {
         _userRepository = userRepository;
     }
+
     public async Task<OperationResult<UserDTO>> GetUserByIdAsync(int id)
     {
         var user = await _userRepository.GetByIdAsync(id);
@@ -25,7 +28,20 @@ public class UserService : IUserService
 
     public async Task<OperationResult<UserDTO>> CreateUserAsync(RequestUserDTO createUserDTO)
     {
-        var user = createUserDTO.ToEntity();
+        if (!Enum.TryParse(createUserDTO.Status, true, out Status status))
+        {
+            return OperationResult<UserDTO>.Failure("INVALID_STATUS");
+        }
+
+        var user = new UserEntity
+        {
+            UserName = createUserDTO.Name,
+            Balance = createUserDTO.Balance,
+            Status = status,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
         await _userRepository.AddAsync(user);
 
         return OperationResult<UserDTO>.SuccessResult(user.ToDomain());

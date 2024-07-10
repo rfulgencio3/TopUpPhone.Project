@@ -57,9 +57,14 @@ public class TopUpItemController : ControllerBase
     [HttpPatch("update-status")]
     public async Task<IActionResult> UpdateTopUpItemStatus(
         [FromHeader] int id,
-        [FromBody] Status status)
+        [FromBody] string status)
     {
-        var result = await _topUpItemService.UpdateTopUpItemStatusAsync(id, status);
+        if (!Enum.TryParse(status, true, out Status enumStatus))
+        {
+            return BadRequest("INVALID_STATUS");
+        }
+
+        var result = await _topUpItemService.UpdateTopUpItemStatusAsync(id, enumStatus);
         if (!result.Success) return NotFound(result.ErrorMessage);
 
         return NoContent();
