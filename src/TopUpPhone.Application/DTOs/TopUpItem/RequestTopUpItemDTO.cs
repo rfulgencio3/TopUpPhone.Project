@@ -9,5 +9,5 @@ public class RequestTopUpItemDTO
     public decimal Amount { get; set; }
     public decimal TransactionFee { get; set; }
     [EnumDataType(typeof(Status), ErrorMessage = "STATUS_MUST_BE_EITHER_'active'_OR_'inactive'.")]
-    public Status Status { get; set; } = Status.Active;
+    public string Status { get; set; }
 }
